@@ -19,6 +19,25 @@
         </button>
     </form>
 
+    <form th:action="@{/files}" method="get">
+        <button class="btn"
+                type="Submit">Files
+        </button>
+    </form>
+
+    <form th:action="@{/user/getall}" method="get">
+        <button class="btn"
+                type="Submit">Show users
+        </button>
+    </form>
+
+
+    <form th:action="@{/user/getinfo}" method="get">
+        <button class="btn" name= "email" th:value="${email}"
+                type="Submit">About User
+        </button>
+    </form>
+
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
             <div class="panel-heading">

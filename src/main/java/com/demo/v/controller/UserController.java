@@ -23,16 +23,16 @@ public class UserController {
     @Autowired
     private DocumentService documentService;
 
-    @GetMapping(value={"/", "/login"})
-    public ModelAndView login(){
+    @GetMapping(value = {"/", "/login"})
+    public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
         return modelAndView;
     }
 
 
-    @GetMapping(value="/registration")
-    public ModelAndView registration(){
+    @GetMapping(value = "/registration")
+    public ModelAndView registration() {
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
         modelAndView.addObject("user", user);
@@ -61,31 +61,32 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping(value="/admin/adminHome")
-    public ModelAndView home(){
+    @GetMapping(value = "/admin/adminHome")
+    public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("email", user.getEmail());
         modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-        modelAndView.addObject("adminMessage","This Page is available to Users with Admin Role");
+        modelAndView.addObject("adminMessage", "This Page is available to Users with Admin Role");
         modelAndView.setViewName("admin/adminHome");
         return modelAndView;
     }
 
-    @GetMapping(value="/user/userHome")
-    public ModelAndView user(){
+    @GetMapping(value = "/user/userHome")
+    public ModelAndView user() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-        modelAndView.addObject("userMessage","This Page is available to Users with User Role");
+        modelAndView.addObject("userMessage", "This Page is available to Users with User Role");
         modelAndView.setViewName("user/userHome");
         return modelAndView;
     }
 
-    @GetMapping("/user/getinfo/{userId}")
-    public ResponseEntity getInfoUser(@PathVariable @NotNull long userId) {
-        return ResponseEntity.ok(userService.getInfo(userId));
+    @GetMapping(path = "/user/getinfo", params = "email")
+    public ResponseEntity getInfoUser(@RequestParam(value = "email") String email) {
+        return ResponseEntity.ok(userService.findUserByEmail(email));
     }
 
     @GetMapping("/user/getall")
@@ -94,10 +95,9 @@ public class UserController {
     }
 
     @GetMapping("/user/get-doc/{userId}")
-    public ResponseEntity getUserDoc(@PathVariable @NotNull long userId){
+    public ResponseEntity getUserDoc(@PathVariable @NotNull long userId) {
         return ResponseEntity.ok(documentService.getUserDocs(userId));
     }
-
 
 
 }
