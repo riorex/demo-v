@@ -4,12 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "FILE")
-public class File {
+public class File implements Serializable {
 
     private static final long serialVersionUID = -5967862371341680946L;
 
