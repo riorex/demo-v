@@ -21,6 +21,12 @@ public class DocumentController {
         return ResponseEntity.ok(documentService.save(doc));
     }
 
+    @DeleteMapping(path = "/delete/{documentId}")
+    public ResponseEntity delDocument(@PathVariable @NotNull long documentId) {
+        documentService.deleteDocument(documentId);
+        return ResponseEntity.ok(null);
+    }
+
     @GetMapping("/get-user-docs/{userId}")
     public ResponseEntity getUserDoc(@PathVariable @NotNull long userId) {
         return ResponseEntity.ok(documentService.getUserDocs(userId));

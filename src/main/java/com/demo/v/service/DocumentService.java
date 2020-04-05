@@ -21,4 +21,11 @@ public class DocumentService {
     public List<Document> getUserDocs(Long userID) {
         return documentRepo.findByUserId(userID);
     }
+
+    public void deleteDocument(Long documentId) {
+        documentRepo.deleteById(documentId);
+
+    }
+
+
 }
