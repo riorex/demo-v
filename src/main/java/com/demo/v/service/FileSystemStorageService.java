@@ -3,6 +3,7 @@ package com.demo.v.service;
 import com.demo.v.config.StorageConfiguration;
 import com.demo.v.exception.FileNotFoundException;
 import com.demo.v.exception.StorageException;
+import com.demo.v.model.File;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -24,17 +25,23 @@ public class FileSystemStorageService implements StorageService {
     private final Path pathToStorage;
 
     @Autowired
+    FileService fileService;
+
+    @Autowired
     public FileSystemStorageService(StorageConfiguration storageConfiguration) {
         this.pathToStorage = Paths.get(storageConfiguration.getUploadDir());
     }
 
     @Override
     public void store(MultipartFile file) {
+        File _file = new File();
         try {
             if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
             }
             Files.copy(file.getInputStream(), this.pathToStorage.resolve(Objects.requireNonNull(file.getOriginalFilename())));
+            _file.setContent(pathToStorage.toString() + file.getOriginalFilename());
+            fileService.save(_file);
         } catch (IOException e) {
             throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
         }

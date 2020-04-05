@@ -1,8 +1,13 @@
 package com.demo.v.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "FILE")
 public class File {
 
@@ -13,5 +18,6 @@ public class File {
     @Column(name = "file_id", nullable = false)
     private Long fileId;
 
-    private byte[] content;
+    @Column(name = "content", nullable = false)
+    private String content;
 }

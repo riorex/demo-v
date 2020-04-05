@@ -19,6 +19,8 @@ import java.util.Set;
 @Table(name = "USER")
 public class User {
 
+    private static final long serialVersionUID  = -7139874523639751520L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "user_id")

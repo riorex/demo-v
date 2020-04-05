@@ -32,7 +32,8 @@ public class Document {
     private Long fileId;
 
     @OneToOne
-    private File file;
+    @JoinTable(name = "FILE", joinColumns = @JoinColumn(name = "file_id"))
+    private File files;
 
     @Column
     private long docNum;

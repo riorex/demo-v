@@ -14,6 +14,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ROLE")
 public class Role {
+    private static final long serialVersionUID  = -7139873323639751520L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "role_id")

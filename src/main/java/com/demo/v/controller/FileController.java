@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
 import java.util.stream.Collectors;
 
 @Controller
@@ -27,7 +26,7 @@ public class FileController {
     }
 
     @GetMapping("/files")
-    public String listUploadedFiles(Model model) throws IOException {
+    public String listUploadedFiles(Model model) {
 
         model.addAttribute("files", storageService.loadAll().map(
                 path -> MvcUriComponentsBuilder.fromMethodName(FileController.class,
@@ -54,10 +53,11 @@ public class FileController {
         redirectAttributes.addFlashAttribute("message",
                 "Successfully uploaded " + file.getOriginalFilename());
 
+
         return "redirect:/files";
     }
 
-    @DeleteMapping ("/files/delete/{filename:.+}")
+    @DeleteMapping("/files/delete/{filename:.+}")
     public String deleteFile(@PathVariable String filename) {
 
         storageService.deleteFile(filename);
